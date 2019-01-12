@@ -1,5 +1,7 @@
 # React Rectangle Selection
 
+<center><img src="https://media.giphy.com/media/TgMQsGWU3JirveHc1t/giphy.gif" width="500" /></center>
+
 ## Installation
 
 `npm install --save react-rectangle-selection`
@@ -35,11 +37,13 @@ render() {
 
 ## Props
 
-| _Prop_ |     _Description_     | 
-| ------ | :-------------------: |
-| onSelect  | Accepts a function that returns the coordinates of the page |     
-| style  |      Sets the style of the selection rectangle       |  
-
+| _Prop_      |                        _Description_                        |
+| ----------- | :---------------------------------------------------------: |
+| onSelect    | Accepts a function that returns the coordinates of the page |
+| onMouseUp   |                     Returns on mouse up                     |
+| onMouseDown |                    Returns on mouse down                    |
+| style       |          Sets the style of the selection rectangle          |
+| disabled    |                    Disable the selection                    |
 
 ## Demo
 

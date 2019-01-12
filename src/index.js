@@ -6,6 +6,7 @@ export default class ReactRectangleSelection extends React.Component {
     super(props);
     this.animationInProgress = null;
     this.state = {
+      hold: false,
       selectionBox: false,
       selectionBoxOrigin: [0, 0],
       selectionBoxTarget: [0, 0],
@@ -27,12 +28,38 @@ export default class ReactRectangleSelection extends React.Component {
   }
 
   closeSelectionBox() {
-    this.setState({ animation: "react-rectangle-selection--fadeout" });
+    if (this.props.onMouseUp) this.props.onMouseUp();
+    this.setState({
+      hold: false,
+      animation: "react-rectangle-selection--fadeout"
+    });
     this.animationInProgress = setTimeout(() => {
       this.setState({ animation: "" });
       this.setState({ selectionBox: false });
       this.animationInProgress = null;
     }, 300);
+  }
+
+  handleMouseDown(e) {
+    if (this.props.disabled) return;
+    let doubleClick = false;
+    clearTimeout(this.animationInProgress);
+    this.animationInProgress = null;
+    this.setState({ selectionBox: false, animation: "" });
+
+    if (
+      this.state.animation.length > 0 &&
+      e.target.id === "react-rectangle-selection"
+    ) {
+      this.setState({ selectionBox: false, animation: "" });
+      doubleClick = true;
+    }
+
+    this.setState({
+      hold: true,
+      selectionBoxOrigin: [e.nativeEvent.pageX, e.nativeEvent.pageY],
+      selectionBoxTarget: [e.nativeEvent.pageX, e.nativeEvent.pageY]
+    });
   }
 
   render() {
@@ -46,37 +73,23 @@ export default class ReactRectangleSelection extends React.Component {
       width: Math.abs(
         this.state.selectionBoxTarget[0] - this.state.selectionBoxOrigin[0] - 1
       ),
+      userSelect: "none",
       transformOrigin: "top left",
       transform: this.handleTransformBox()
     };
     return (
       <div
+        style={{ height: "inherit", width: "inherit" }}
         onMouseLeave={() => {
           this.closeSelectionBox();
         }}
-        onMouseDown={e => {
-          let doubleClick = false;
-          clearTimeout(this.animationInProgress);
-          this.animationInProgress = null;
-          this.setState({ selectionBox: false, animation: "" });
-
-          if (
-            this.state.animation.length > 0 &&
-            e.target.id === "react-rectangle-selection"
-          ) {
-            this.setState({ selectionBox: false, animation: "" });
-            doubleClick = true;
-          }
-
-          this.setState({
-            selectionBox: true,
-            selectionBoxOrigin: [e.nativeEvent.pageX, e.nativeEvent.pageY],
-            selectionBoxTarget: [e.nativeEvent.pageX, e.nativeEvent.pageY]
-          });
-        }}
+        onMouseDown={e => this.handleMouseDown(e)}
         onMouseUp={() => this.closeSelectionBox()}
         onMouseMove={evt => {
-          console.log(evt.nativeEvent);
+          if (this.state.hold && !this.state.selectionBox) {
+            if (this.props.onMouseDown) this.props.onMouseDown();
+            this.setState({ selectionBox: true });
+          }
           if (this.state.selectionBox && !this.animationInProgress) {
             this.setState({
               selectionBoxTarget: [evt.nativeEvent.pageX, evt.nativeEvent.pageY]
