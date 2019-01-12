@@ -1,7 +1,12 @@
 {
   "name": "react-rectangle-selection",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A rectangle selection tool",
+  "homepage": "https://github.com/remigallego/react-rectangle-selection",
+  "bugs": {
+    "url": "https://github.com/remigallego/react-rectangle-selection/issues",
+    "email": "remi.gallego@gmail.com"
+  },
   "main": "build/index.js",
   "scripts": {
     "start": "webpack --watch",
