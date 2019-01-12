@@ -47,4 +47,4 @@ render() {
 
 ## Demo
 
-<a href="http://skillful-property.surge.sh">RectangleSelection Demo</a>
+<a href="http://five-food.surge.sh">RectangleSelection Demo</a>
