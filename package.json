@@ -1,6 +1,6 @@
 {
   "name": "react-rectangle-selection",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A rectangle selection tool",
   "main": "build/index.js",
   "scripts": {
