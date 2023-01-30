@@ -41,7 +41,7 @@ export default class ReactRectangleSelection extends React.Component {
   }
 
   handleMouseDown(e) {
-    if (this.props.disabled) return;
+    if (this.props.disabled || (this.props.disabledFn && this.props.disabledFn())) return;
     let doubleClick = false;
     clearTimeout(this.animationInProgress);
     this.animationInProgress = null;
